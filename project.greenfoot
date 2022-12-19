@@ -1,4 +1,8 @@
 #Greenfoot project file
+class.GameOver.image=Halloween_design_5_generated.jpg
+class.Introduction.image=istockphoto-585056386-612x612.jpeg
+class.MyWorld.image=Halloween_design_5_generated.jpg
+class.TitleScreen.image=istockphoto-585056386-612x612.jpeg
 dependency1.from=TitleScreen
 dependency1.to=Label
 dependency1.type=UsesDependency
@@ -66,6 +70,6 @@ target5.x=0
 target5.y=0
 version=3.0.0
 width=827
-world.lastInstantiated=TitleScreen
+world.lastInstantiated=GameOver
 xPosition=74
 yPosition=166
