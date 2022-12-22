@@ -6,8 +6,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Player extends Actor
+    public class Player extends Actor
 {
+    // World variables
     private String curWorld;
     public static int[] spawn = {200, 528}; // Default is for tutorial
     // Note: First life listed here is third life slot
@@ -36,10 +37,143 @@ public class Player extends Actor
     private boolean isJumping = false;
     private char lastMoveState;
     
+    // Animation variables
+    private int frame = 0; // Current animation frame
+    private int frameDir = 0; // Direction of animation, right = 0, left = 1
+    private int lastFrameDir = 0; // Direction of last animation played
+    private int frameInterval = 0; // Time waited for animation
+    private int frameDelay = 10; // Time to wait for next animation
+    private boolean ignoreCD = false; // Ignore animation cooldown
+    private boolean forceIdle = false; // Force into idle animation
+    private String lastMove = "none"; // Last movement animation
+    private GreenfootImage[][] idle = new GreenfootImage[2][4];
+    private GreenfootImage[][] walk = new GreenfootImage[2][6];
+    private GreenfootImage[][] jump = new GreenfootImage[2][4];
+    private GreenfootImage[][] fall = new GreenfootImage[2][2];
+    
+    public Player(String curWorld)
+    {
+        this.curWorld = curWorld;
+        // Idles left and right:
+        for(int i = 0; i <= 1; i++) // Right = 0, Left = 1
+        {
+           for(int j = 0; j <= 3; j++) // 4 idle states
+            {
+                idle[i][j] = new GreenfootImage("PCAnim/adventurer-idle-0" + j + "-" + i + ".png");
+                idle[i][j].scale((int)(24*1.6), (int)(30*1.6));
+            }
+        }
+        // Walk left and right:
+        for(int i = 0; i <= 1; i++)
+        {
+            for(int j = 0; j <= 5; j++)
+            {
+                walk[i][j] = new GreenfootImage("PCAnim/adventurer-run-0" + j + "-" + i + ".png");
+                walk[i][j].scale((int)(24*1.6), (int)(30*1.6));
+            }
+        }
+        // Jump left and right:
+        for(int i = 0; i <= 1; i++)
+        {
+            for(int j = 0; j <= 3; j++)
+            {
+                jump[i][j] = new GreenfootImage("PCAnim/adventurer-jump-0" + j + "-" + i + ".png");
+                jump[i][j].scale((int)(24*1.6), (int)(30*1.6));
+            }
+        }
+        // Fall left and right:
+        for(int i = 0; i <= 1; i++)
+        {
+            for(int j = 0; j <= 1; j++)
+            {
+                fall[i][j] = new GreenfootImage("PCAnim/adventurer-fall-0" + j + "-" + i + ".png");
+                fall[i][j].scale((int)(24*1.6), (int)(30*1.6));
+            }
+        }
+        setImage(idle[0][0]);
+    }
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    //moves the player based on any x,y changes given by movement
+    private void move(int x,int y){
+        setLocation(getX()+x, getY()+y);
+    }
+    
+    //handles the left and right movement
+    private void leftRight(boolean aPressed, boolean dPressed){
+        //slowly increases speed as you hold 'A' or 'D'
+        if (tempHoriSpeed <= maxHoriVelocity){
+            tempHoriSpeed += 0.1;
+        }
+        //if 'A' and 'D' are pressed at the same time, reset speed
+        if (aPressed && dPressed){
+            tempHoriSpeed = horiSpeed;
+        } else {
+            //if 'A' pressed, subtract from x value
+            if(aPressed){
+                if(isTouching(ImpassableBoxRightSide.class)){
+                    
+                } else {
+                    x -= tempHoriSpeed;
+                }
+            }
+            //if 'D' pressed, add to x value
+            if(dPressed){
+                if(isTouching(ImpassableBoxLeftSide.class)){
+                    
+                } else {
+                    x += tempHoriSpeed;
+                }
+            }
+        }
+    }
+    
+    private void jump(){ 
+        if (!isJumping){
+            amountJumped = 0;
+            tempJumpSpeed = jumpSpeed;
+            isJumping = true;           
+        } else if (!isFalling){
+            if (tempJumpSpeed <= 0){           
+                isFalling = true;
+                isJumping = false;              
+                amountFallen = 0;
+                amountJumped = 0;
+                wPressed = false;
+                jumpDecelTimer = 0;
+            } else {    
+                y -= tempJumpSpeed;
+                amountJumped += tempJumpSpeed;
+                if (isTouching(ImpassableBoxCeiling.class))
+                {
+                    tempJumpSpeed = 0;
+                }
+                else if (jumpDecelTimer % 2 == 0)
+                {
+                    tempJumpSpeed -= jumpDecel;
+                }
+                jumpDecelTimer += 1;
+            }
+        } else if (wPressed == false && isJumping == true && isFalling == false){
+            isFalling = true;
+            amountFallen = 0;
+            amountJumped = 0;
+        }
+    }
+    
+    //handles the player falling 
+    private void fall(){
+        //slowly ramps up how fast they fall
+        if ((amountFallen += GRAVITY) != MAX_VERT_VELOCITY){
+            amountFallen = (amountFallen + GRAVITY);
+        }
+        
+        y += amountFallen;
+    }
+    
+    //handles movement and collision
     private void movementCollision()
     {
         //resets x,y changes 
@@ -127,31 +261,165 @@ public class Player extends Actor
         }
     }
     
-    private void leftRight(boolean aPressed, boolean dPressed){
-        //slowly increases speed as you hold 'A' or 'D'
-        if (tempHoriSpeed <= maxHoriVelocity){
-            tempHoriSpeed += 0.1;
+    //handles all the world changing
+    public void nextWorld(String curWorld){
+        // If the Player object is touching any object of the NextLevelBox class
+        if(isTouching(NextLevel.class)){
+            Sounds.playSound("NextLevel.mp3");
+            if(curWorld.equals("Tutorial")){ // If on tutorial
+                spawn[0] = 48; // Sets spawn x
+                spawn[1] = 504; // Sets spawn y
+                LevelOne gameWorld = new LevelOne();
+                Greenfoot.setWorld(gameWorld); // Go to level one
+            }else if(curWorld.equals("LevelOne")){ // If on level one
+                spawn[0] = 100;
+                spawn[1] = 100;
+                LevelTwo gameWorld= new LevelTwo();
+                Greenfoot.setWorld(gameWorld); // Go to level two
+            }else if (curWorld.equals("LevelTwo")){ // If on level two
+                spawn[0] = 48;
+                spawn[1] = 312;
+                LevelThree gameWorld= new LevelThree();
+                Greenfoot.setWorld(gameWorld); // Go to level one
+            } else if (curWorld.equals("LevelThree")){
+                spawn[0] = 48;
+                spawn[1] = 240;
+                LevelFour gameWorld = new LevelFour();
+                Greenfoot.setWorld(gameWorld); // Go to level four
+            } else if (curWorld.equals("LevelFour"))
+            {
+                Win gameWorld = new Win();
+                Greenfoot.setWorld(gameWorld); // Go to win screen
+            }
         }
-        //if 'A' and 'D' are pressed at the same time, reset speed
-        if (aPressed && dPressed){
-            tempHoriSpeed = horiSpeed;
-        } else {
-            //if 'A' pressed, subtract from x value
-            if(aPressed){
-                if(isTouching(ImpassableBoxRightSide.class)){
-                    
-                } else {
-                    x -= tempHoriSpeed;
+    }
+    
+    
+    private void animationState()
+    {
+        // If moving left previously, but now moving right
+        if(lastFrameDir != frameDir)
+        {
+            if (!(aPressed && dPressed)) // Both a and d are not pressed
+            {
+                ignoreCD = true;
+            }
+            else
+            {
+                forceIdle = true;
+            }
+        }
+        if(isFalling) // Falling
+        {
+            if (!lastMove.equals("fall")) // Previously not falling
+            {
+                frame = 0; // Reset frame count
+                ignoreCD = true; // Skip animation delay
+            }
+            if (frameInterval % frameDelay == 0 || ignoreCD)
+            {
+                frame = (frame + 1) % fall[0].length; // add frames on to animate
+                setImage(fall[frameDir][frame]); // set to frame
+                lastMove = "fall"; // last movement vector was fall
+            }
+        }
+        else if(isJumping)
+        {
+            if (!lastMove.equals("jump"))
+            {
+                frame = 0;
+                ignoreCD = true;
+            }
+            if (frameInterval % frameDelay == 0 || ignoreCD)
+            {
+                frame = (frame + 1) % jump[0].length;
+                setImage(jump[frameDir][frame]);
+                lastMove = "jump";
+            }
+        }
+        else if((dPressed || aPressed) && !forceIdle)
+        {
+            if (!lastMove.equals("walk"))
+            {
+                frame = 0;
+                ignoreCD = true;
+            }
+            if (frameInterval % frameDelay == 0 || ignoreCD)
+            {
+                frame = (frame + 1) % walk[0].length;
+                setImage(walk[frameDir][frame]);
+                lastMove = "walk";
+            }
+        }
+        else // Player is idle
+        {
+            if (!lastMove.equals("idle"))
+            {
+                frame = 0;
+                ignoreCD = true;
+            }
+            if (frameInterval % frameDelay == 0 || ignoreCD)
+            {
+                frame = (frame + 1) % idle[0].length;
+                setImage(idle[frameDir][frame]);
+                lastMove = "idle";
+                lastFrameDir = frameDir; // reset movement directions
+            }
+        }
+        // To avoid integer overflow, reset frameInterval
+        if (frameInterval >= 100){frameInterval = 0;} 
+        frameInterval++;
+        ignoreCD = false;
+        forceIdle = false;
+    }
+    public void updateHP(boolean heal) // if false, damage
+    {
+        if (lives[0].getFilled() && heal) // has max HP and healing
+        {
+            score += 300; // Increase score
+        }
+        else // Not max hp or not healing
+        {
+            for (int i = 0; i < lives.length; i++)
+            {
+                if (lives[i].getFilled() && !heal) // Has HP here and taking dmg
+                {
+                    lives[i].updateStatus(false); // Take damage
+                    break;
                 }
             }
-            //if 'D' pressed, add to x value
-            if(dPressed){
-                if(isTouching(ImpassableBoxLeftSide.class)){
-                    
-                } else {
-                    x += tempHoriSpeed;
+            for (int i = 2; i >= 0; i--)
+            {
+                if (!lives[i].getFilled() && heal) // No HP here and healing
+                {
+                    lives[i].updateStatus(true); // heal
+                    break;
                 }
             }
         }
     }
+    // Called when chest or coin is touched, increases score
+    public void updateScore(String collected)
+    {
+        if (collected.equals("Chest"))
+        {
+            score += 500;
+        }
+        else if (collected.equals("Coin"))
+        {
+            score += 100;
+        }
+    }
+    // Used to manage last movement direction vs. current movement direction
+    private void changeFrameDir(int newDir)
+    {
+        lastFrameDir = frameDir;
+        frameDir = newDir;
+    }
+    
+    public void act(){
+        animationState();
+        movementCollision();
+    }
 }
+
