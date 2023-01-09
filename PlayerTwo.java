@@ -1,12 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Player here.
+ * Write a description of class PlayerTwo here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-    public class Player extends Actor
+public class PlayerTwo extends Actor
 {
     /**
      * Act - do whatever the Elephant wants to do. This method is called whenever
@@ -20,7 +20,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
     
     boolean eatApple = false;
 
-    public Player()
+    public PlayerTwo()
     {
         for(int i=0; i < idleRight.length; i++)
         {
@@ -63,23 +63,23 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
     public void act()
     {
         // Add your action code here.
-        if(Greenfoot.isKeyDown("w"))
+        if(Greenfoot.isKeyDown("down"))
         {
             setLocation(getX(),getY()-3);
         }
 
-        if(Greenfoot.isKeyDown("s"))
+        if(Greenfoot.isKeyDown("up"))
         {
             setLocation(getX(),getY()+3);
         }
 
-        if(Greenfoot.isKeyDown("d"))
+        if(Greenfoot.isKeyDown("right"))
         {
             setLocation(getX()+3,getY());
             facing = "right";
         }
 
-        if(Greenfoot.isKeyDown("a"))
+        if(Greenfoot.isKeyDown("left"))
         {
             setLocation(getX()-3,getY());
             facing = "left";
@@ -111,4 +111,3 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         return eatApple;
     }
 }
-

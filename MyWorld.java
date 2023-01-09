@@ -27,11 +27,16 @@ public class MyWorld extends World
 
         if(numPlayers == 1)
         {
-            
+            Player player = new Player();
+            addObject(player,400,300);
         }
         else if(numPlayers == 2)
         {
-           
+            Player player = new Player();
+            addObject(player,400,300);
+            
+            PlayerTwo playerTwo = new PlayerTwo();
+            addObject(playerTwo,100,300);
         }
     }
 }
