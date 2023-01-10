@@ -24,13 +24,13 @@ public class PlayerTwo extends Actor
     {
         for(int i=0; i < idleRight.length; i++)
         {
-            idleRight[i] = new GreenfootImage ("images/HeroRun/tile"+i+".png");
+            idleRight[i] = new GreenfootImage ("images/HeroRun/tile00"+i+".png");
             idleRight[i].scale(80,80);
         }
 
         for(int i=0; i < idleRight.length; i++)
         {
-            idleLeft[i] = new GreenfootImage ("images/HeroRun/tile"+i+".png");
+            idleLeft[i] = new GreenfootImage ("images/HeroRun/tile00"+i+".png");
             idleLeft[i].mirrorHorizontally();
             idleLeft[i].scale(80,80);
         }
@@ -63,12 +63,12 @@ public class PlayerTwo extends Actor
     public void act()
     {
         // Add your action code here.
-        if(Greenfoot.isKeyDown("down"))
+        if(Greenfoot.isKeyDown("up"))
         {
             setLocation(getX(),getY()-3);
         }
 
-        if(Greenfoot.isKeyDown("up"))
+        if(Greenfoot.isKeyDown("down"))
         {
             setLocation(getX(),getY()+3);
         }
@@ -84,21 +84,16 @@ public class PlayerTwo extends Actor
             setLocation(getX()-3,getY());
             facing = "left";
         }
-        hit();
+        
+        if(isTouching(Zombie.class))
+        {
+            
+        }
+        
 
         animateHeroRun();
 
     }
-
-    public void hit()
-    {
-        if(isTouching(Zombie.class))
-        {
-            removeTouching(Zombie.class);
-            MyWorld world = (MyWorld) getWorld();
-
-        }
-    }  
 
     int size = 80;
     public void setSize(int sz)

@@ -57,4 +57,6 @@ public class Zombie extends Actor
             imageIndex = (imageIndex + 1) % idleLeft.length;
         }
     }
+    
+    
 }
