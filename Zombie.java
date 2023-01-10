@@ -17,6 +17,9 @@ public class Zombie extends Actor
     
     String facing = "right";
     SimpleTimer animationTimer = new SimpleTimer();
+    
+    int speed = 1;
+    int life = 5;
     public void act()
     {
         // Add your action code here.
@@ -39,7 +42,7 @@ public class Zombie extends Actor
     }
     
     int imageIndex = 0;
-    public void animateElephant()
+    public void animateZombie()
     {
         if(animationTimer.millisElapsed() < 230)
         {
@@ -58,5 +61,12 @@ public class Zombie extends Actor
         }
     }
     
-    
+    public void setSpeed(int spd)
+    {
+        speed = spd;
+    }
+    private int getLife()
+    {
+        return life;
+    }
 }

@@ -8,8 +8,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class MyWorld extends World
 {
-
+    public int score;
+    Label scoreLabel;
+    int level = 1;
     int numPlayer;
+    int speed = 1;
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -23,6 +26,9 @@ public class MyWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1, false); 
         getBackground().scale(600,500);
+        
+        scoreLabel = new Label(0, 80);
+        addObject(scoreLabel,50,50);
 
 
         if(numPlayers == 1)
@@ -37,6 +43,35 @@ public class MyWorld extends World
             
             PlayerTwo playerTwo = new PlayerTwo();
             addObject(playerTwo,100,300);
+        }
+    }
+    
+    public void increaseScore()
+    {
+        score++;
+        scoreLabel.setValue(score);
+        int i = score / 50;
+        if(i >= 1)
+        {
+            level = i + 1;
+        }
+        else
+        {
+            level = 1;
+        }
+    }
+    
+    public void createZombie()
+    {
+        Zombie zombie = new Zombie();
+        int x = Greenfoot.getRandomNumber(600);
+        int y = Greenfoot.getRandomNumber(400);
+        addObject(zombie,x,y);
+        zombie.setSpeed(level);
+        if(zombie.life == 0)
+        {
+            removeObject(zombie);
+            score += 10;
         }
     }
 }

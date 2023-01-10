@@ -14,13 +14,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
      */
     GreenfootImage[] idleRight = new GreenfootImage[5];
     GreenfootImage[] idleLeft = new GreenfootImage[5];
-    GreenfootImage[] idleup = new GreenfootImage[5];
-    GreenfootImage[] idleDown = new GreenfootImage[5];
+    GreenfootImage[] idleKill = new GreenfootImage[5];
+    GreenfootImage[] idleStand = new GreenfootImage[5];
 
     String facing = "right";
     SimpleTimer animationTimer = new SimpleTimer();
     
     boolean eatApple = false;
+    int hurt = 1;
 
     public Player()
     {
@@ -43,7 +44,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
             idleRight[i].scale(80,80);
         }
         */
-        for(int i=0; i < idleDown.length; i++)
+        for(int i=0; i < idleStand.length; i++)
         {
             idleRight[i] = new GreenfootImage ("images/HeroStand/tile00"+i+".png");
             idleRight[i].scale(80,80);
@@ -74,13 +75,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         }
         else if(facing.equals("up"))
         {
-            setImage(idleup[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleup.length;
+            setImage(idleKill[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleKill.length;
         }
         else if(facing.equals("Down"))
         {
-            setImage(idleDown[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleDown.length;
+            setImage(idleStand[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleStand.length;
         }
     }
 
@@ -123,21 +124,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
     {
         if(isTouching(Zombie.class))
         {
-            removeTouching(Zombie.class);
-            MyWorld world = (MyWorld) getWorld();
-
+            Zombie.getLife() -= hurt;
+            
         }
     }  
-
-    int size = 80;
-    public void setSize(int sz)
-    {
-        size = size + sz;
-    }
-
-    public boolean getEatApple()
-    {
-        return eatApple;
-    }
 }
 
