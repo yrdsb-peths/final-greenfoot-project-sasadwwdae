@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-    public class Player extends Actor
+public class Player extends Actor
 {
     /**
      * Act - do whatever the Elephant wants to do. This method is called whenever
@@ -14,12 +14,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
      */
     GreenfootImage[] idleRight = new GreenfootImage[5];
     GreenfootImage[] idleLeft = new GreenfootImage[5];
-    GreenfootImage[] idleup = new GreenfootImage[5];
+    GreenfootImage[] idleUp = new GreenfootImage[5];
     GreenfootImage[] idleDown = new GreenfootImage[5];
 
     String facing = "right";
     SimpleTimer animationTimer = new SimpleTimer();
-    
+
     boolean eatApple = false;
 
     public Player()
@@ -39,19 +39,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         /*
         for(int i=0; i < idleup.length; i++)
         {
-            idleRight[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
-            idleRight[i].scale(80,80);
+        idleRight[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
+        idleRight[i].scale(80,80);
         }
-        */
+         */
         for(int i=0; i < idleDown.length; i++)
         {
-            idleRight[i] = new GreenfootImage ("images/HeroStand/tile00"+i+".png");
-            idleRight[i].scale(80,80);
+            idleDown[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
+            idleDown[i].scale(80,80);
         }
 
         animationTimer.mark();
 
-        setImage(idleRight[0]);
+        setImage(idleDown[0]);
     }
 
     int imageIndex = 0;
@@ -74,10 +74,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         }
         else if(facing.equals("up"))
         {
-            setImage(idleup[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleup.length;
+            setImage(idleUp[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleUp.length;
         }
-        else if(facing.equals("Down"))
+        else if(facing.equals("down"))
         {
             setImage(idleDown[imageIndex]);
             imageIndex = (imageIndex + 1) % idleDown.length;
@@ -91,27 +91,30 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         {
             setLocation(getX(),getY()-3);
         }
-
-        if(Greenfoot.isKeyDown("s"))
+        else if(Greenfoot.isKeyDown("s"))
         {
             setLocation(getX(),getY()+3);
         }
 
-        if(Greenfoot.isKeyDown("d"))
+        else if(Greenfoot.isKeyDown("d"))
         {
             setLocation(getX()+3,getY());
             facing = "right";
         }
 
-        if(Greenfoot.isKeyDown("a"))
+        else if(Greenfoot.isKeyDown("a"))
         {
             setLocation(getX()-3,getY());
             facing = "left";
         }
-        
-        if(Greenfoot.isKeyDown("q"))
+
+        else if(Greenfoot.isKeyDown("q"))
         {
             facing = "up";
+        }
+        else
+        {
+            facing = "down";
         }
         hit();
 
