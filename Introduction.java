@@ -20,6 +20,7 @@ public class Introduction extends World
         prepare();
         getBackground().scale(600,500);
     }
+
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
@@ -51,5 +52,18 @@ public class Introduction extends World
         Label label6 = new Label("press 1 or 2 start the game", 40);
         addObject(label6,287,310);
         label6.setLocation(308,309);
+    }
+
+    public void act()
+    {
+        if(Greenfoot.isKeyDown("1"))
+        {
+            MyWorld gameWorld = new MyWorld(1);
+            Greenfoot.setWorld(gameWorld);
+        }else if(Greenfoot.isKeyDown("2"))
+        {
+            MyWorld gameWorld = new MyWorld(2);
+            Greenfoot.setWorld(gameWorld);
+        }
     }
 }

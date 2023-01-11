@@ -20,6 +20,7 @@ public class Zombie extends Actor
     
     int speed = 1;
     int life = 5;
+    int hurt = 1;
     public void act()
     {
         // Add your action code here.
@@ -40,7 +41,6 @@ public class Zombie extends Actor
 
         setImage(idleRight[0]);
     }
-    
     int imageIndex = 0;
     public void animateZombie()
     {
@@ -61,10 +61,24 @@ public class Zombie extends Actor
         }
     }
     
+    public void act()
+    {
+        if(Zombie.getX() != Player.getX())
+        {
+            setLocation(getX()+2,getY()&&setLocation(getX()-2,getY());
+        }
+        
+        if(Zombie.getY() != Player.getY())
+        {
+            setLocation(getX(),getY()+2)&&setLocation(getX(),getY()-2);
+        }
+    }
+    
     public void setSpeed(int spd)
     {
         speed = spd;
     }
+
     private int getLife()
     {
         return life;

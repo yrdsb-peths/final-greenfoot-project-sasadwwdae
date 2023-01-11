@@ -6,7 +6,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-    public class Player extends Actor
+public class Player extends Actor
 {
     /**
      * Act - do whatever the Elephant wants to do. This method is called whenever
@@ -19,9 +19,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
     String facing = "right";
     SimpleTimer animationTimer = new SimpleTimer();
-    
-    boolean eatApple = false;
+
+    int zombieLife = 5;
     int hurt = 1;
+    int heroLife = 3;
 
     public Player()
     {
@@ -40,14 +41,22 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         /*
         for(int i=0; i < idleup.length; i++)
         {
-            idleRight[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
-            idleRight[i].scale(80,80);
+        idleRight[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
+        idleRight[i].scale(80,80);
+        if(isTouching(Zombie.class))
+        {
+        zombieLife -= hurt;
+        }
         }
         */
         for(int i=0; i < idleStand.length; i++)
         {
-            idleRight[i] = new GreenfootImage ("images/HeroStand/tile00"+i+".png");
+            idleRight[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
             idleRight[i].scale(80,80);
+            if(isTouching(Zombie.class))
+            {
+                heroLife --;
+            }
         }
 
         animationTimer.mark();
@@ -58,7 +67,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
     int imageIndex = 0;
     public void animateHeroRun()
     {
-        if(animationTimer.millisElapsed() < 230)
+        if(animationTimer.millisElapsed() < 200)
         {
             return;
         }
@@ -92,41 +101,41 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         {
             setLocation(getX(),getY()-3);
         }
-
-        if(Greenfoot.isKeyDown("s"))
+        else if(Greenfoot.isKeyDown("s"))
         {
             setLocation(getX(),getY()+3);
         }
-
-        if(Greenfoot.isKeyDown("d"))
+        else if(Greenfoot.isKeyDown("d"))
         {
             setLocation(getX()+3,getY());
             facing = "right";
         }
-
-        if(Greenfoot.isKeyDown("a"))
+        else if(Greenfoot.isKeyDown("a"))
         {
             setLocation(getX()-3,getY());
             facing = "left";
         }
-        
-        if(Greenfoot.isKeyDown("q"))
+        else if(Greenfoot.isKeyDown("q"))
         {
             facing = "up";
         }
-        hit();
+        else
+        {
+            facing = "down";
+        }
 
         animateHeroRun();
 
-    }
+    } 
 
-    public void hit()
+    private int getZombieLife()
     {
-        if(isTouching(Zombie.class))
-        {
-            Zombie.getLife() -= hurt;
-            
-        }
-    }  
+        return zombieLife;
+    }
+    
+    private int getHeroLife()
+    {
+        return heroLife;
+    }
 }
 
