@@ -13,6 +13,7 @@ public class MyWorld extends World
     int level = 1;
     int numPlayer;
     int speed = 1;
+
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -58,20 +59,6 @@ public class MyWorld extends World
         else
         {
             level = 1;
-        }
-    }
-    
-    public void createZombie()
-    {
-        Zombie zombie = new Zombie();
-        int x = Greenfoot.getRandomNumber(600);
-        int y = Greenfoot.getRandomNumber(400);
-        addObject(zombie,x,y);
-        zombie.setSpeed(level);
-        if(zombie.life == 0)
-        {
-            removeObject(zombie);
-            score += 10;
         }
     }
 }

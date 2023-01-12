@@ -14,14 +14,14 @@ public class Zombie extends Actor
      */
     GreenfootImage[] idleRight = new GreenfootImage[5];
     GreenfootImage[] idleLeft = new GreenfootImage[5];
-    
-    String facing = "right";
+
     SimpleTimer animationTimer = new SimpleTimer();
-    
+
     int speed = 1;
     int life = 5;
     int hurt = 1;
-    public void act()
+    Player player;
+    public Zombie(Player player)
     {
         // Add your action code here.
         for(int i=0; i < idleRight.length; i++)
@@ -36,7 +36,7 @@ public class Zombie extends Actor
             idleLeft[i].mirrorHorizontally();
             idleLeft[i].scale(40,40);
         }
-        
+
         animationTimer.mark();
 
         setImage(idleRight[0]);
@@ -49,41 +49,17 @@ public class Zombie extends Actor
             return;
         }
         animationTimer.mark();
-        if(facing.equals("right"))
-        {
-            setImage(idleRight[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleRight.length;
-        }
-        else
-        {
-            setImage(idleLeft[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleLeft.length;
-        }
+
+        setImage(idleRight[imageIndex]);
+        imageIndex = (imageIndex + 1) % idleRight.length;
+
     }
-    
+
     public void act()
     {
-        if(Zombie.getX() <= Player.getX())
-        {
-            setLocation(getX()+2,getY());
-            facing = right;
-        }
-        else if(Zombie.getX() >= Player.getX())
-        {
-            setLocation(getX()-2,getY());
-            facing = left;
-        }
-        
-        if(Zombie.getY() <= Player.getY())
-        {
-            setLocation(getX(),getY()+2);
-        }
-        else if(Zombie.getY() >= Player.getY())
-        {
-            setLocation(getX(),getY()-2);
-        }
+        turnTowards(player.getX(),player.getY());
     }
-    
+
     public void setSpeed(int spd)
     {
         speed = spd;
