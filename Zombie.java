@@ -63,14 +63,24 @@ public class Zombie extends Actor
     
     public void act()
     {
-        if(Zombie.getX() != Player.getX())
+        if(Zombie.getX() <= Player.getX())
         {
-            setLocation(getX()+2,getY()&&setLocation(getX()-2,getY());
+            setLocation(getX()+2,getY());
+            facing = right;
+        }
+        else if(Zombie.getX() >= Player.getX())
+        {
+            setLocation(getX()-2,getY());
+            facing = left;
         }
         
-        if(Zombie.getY() != Player.getY())
+        if(Zombie.getY() <= Player.getY())
         {
-            setLocation(getX(),getY()+2)&&setLocation(getX(),getY()-2);
+            setLocation(getX(),getY()+2);
+        }
+        else if(Zombie.getY() >= Player.getY())
+        {
+            setLocation(getX(),getY()-2);
         }
     }
     
