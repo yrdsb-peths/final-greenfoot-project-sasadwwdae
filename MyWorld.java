@@ -45,6 +45,8 @@ public class MyWorld extends World
             PlayerTwo playerTwo = new PlayerTwo();
             addObject(playerTwo,100,300);
         }
+        
+        addObject(Zombie,600,0);
     }
     
     public void increaseScore()

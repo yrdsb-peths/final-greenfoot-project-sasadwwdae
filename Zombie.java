@@ -30,13 +30,6 @@ public class Zombie extends Actor
             idleRight[i].scale(40,40);
         }
 
-        for(int i=0; i < idleRight.length; i++)
-        {
-            idleLeft[i] = new GreenfootImage ("images/ZombieStand" + i+ ".png");
-            idleLeft[i].mirrorHorizontally();
-            idleLeft[i].scale(40,40);
-        }
-
         animationTimer.mark();
 
         setImage(idleRight[0]);
