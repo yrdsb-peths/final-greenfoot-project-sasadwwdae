@@ -49,14 +49,11 @@ public class Player extends Actor
         }
         }
         */
+        
         for(int i=0; i < idleStand.length; i++)
         {
             idleRight[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
             idleRight[i].scale(80,80);
-            if(isTouching(Zombie.class))
-            {
-                heroLife --;
-            }
         }
 
         animationTimer.mark();

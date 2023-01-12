@@ -21,34 +21,33 @@ public class MyWorld extends World
     public MyWorld(){
         this(1);
     }
-    
+
     public MyWorld(int numPlayers)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1, false); 
         getBackground().scale(600,500);
-        
+
         scoreLabel = new Label(0, 80);
         addObject(scoreLabel,50,50);
 
-
+        Player player1 = new Player;
+        Player player2 = new PlayerTwo;
         if(numPlayers == 1)
         {
-            Player player = new Player();
-            addObject(player,400,300);
+            addObject(player1,400,300);
         }
-        else if(numPlayers == 2)
+
+        if(numPlayers == 2)
         {
-            Player player = new Player();
-            addObject(player,400,300);
-            
-            PlayerTwo playerTwo = new PlayerTwo();
-            addObject(playerTwo,100,300);
+            addObject(player2,100,300);
+            addObject(player1,400,300);
         }
-        
-        addObject(Zombie,600,0);
+
+        Zombie zombie = new Zombie(player1);
+        addObject(zombie,600,0);
     }
-    
+
     public void increaseScore()
     {
         score++;

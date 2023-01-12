@@ -13,7 +13,6 @@ public class Zombie extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     GreenfootImage[] idleRight = new GreenfootImage[5];
-    GreenfootImage[] idleLeft = new GreenfootImage[5];
 
     SimpleTimer animationTimer = new SimpleTimer();
 
@@ -26,7 +25,7 @@ public class Zombie extends Actor
         // Add your action code here.
         for(int i=0; i < idleRight.length; i++)
         {
-            idleRight[i] = new GreenfootImage ("images/ZombieStand" + i+ ".png");
+            idleRight[i] = new GreenfootImage ("images/ZombieStand/" + i+ ".png");
             idleRight[i].scale(40,40);
         }
 
