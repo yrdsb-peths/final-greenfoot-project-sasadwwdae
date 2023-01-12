@@ -38,18 +38,13 @@ public class Player extends Actor
             idleLeft[i].mirrorHorizontally();
             idleLeft[i].scale(80,80);
         }
-        /*
-        for(int i=0; i < idleup.length; i++)
+
+        for(int i=0; i < idleKill.length; i++)
         {
-        idleRight[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
-        idleRight[i].scale(80,80);
-        if(isTouching(Zombie.class))
-        {
-        zombieLife -= hurt;
+            idleRight[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
+            idleRight[i].scale(80,80);
         }
-        }
-        */
-        
+
         for(int i=0; i < idleStand.length; i++)
         {
             idleRight[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
@@ -129,7 +124,7 @@ public class Player extends Actor
     {
         return zombieLife;
     }
-    
+
     private int getHeroLife()
     {
         return heroLife;

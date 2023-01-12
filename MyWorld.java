@@ -32,7 +32,7 @@ public class MyWorld extends World
         addObject(scoreLabel,50,50);
 
         Player player1 = new Player;
-        Player player2 = new PlayerTwo;
+        PlayerTwo player2 = new PlayerTwo;
         if(numPlayers == 1)
         {
             addObject(player1,400,300);
@@ -44,8 +44,6 @@ public class MyWorld extends World
             addObject(player1,400,300);
         }
 
-        Zombie zombie = new Zombie(player1);
-        addObject(zombie,600,0);
     }
 
     public void increaseScore()
