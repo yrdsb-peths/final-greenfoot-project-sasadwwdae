@@ -13,7 +13,8 @@ public class MyWorld extends World
     int level = 1;
     int numPlayer;
     int speed = 1;
-
+    Player player1;
+    
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -31,23 +32,21 @@ public class MyWorld extends World
         scoreLabel = new Label(0, 80);
         addObject(scoreLabel,50,50);
 
-        Player player1 = new Player();
-        PlayerTwo player2 = new PlayerTwo();
-        if(numPlayers == 1)
-        {
-            addObject(player1,400,300);
-        }
-
+        player1 = new Player();
+        addObject(player1,400,300);
+        
         if(numPlayers == 2)
         {
+            PlayerTwo player2 = new PlayerTwo();
             addObject(player2,100,300);
-            addObject(player1,400,300);
         }
         
-        Zombie zobmie = new Zombie(player1);
-        addObject(zobmie,600,400);
+        Zombie zombie = new Zombie();
+        addObject(zombie,200,200);
 
     }
+    
+    
 
     public void increaseScore()
     {
