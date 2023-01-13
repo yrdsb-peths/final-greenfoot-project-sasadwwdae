@@ -12,7 +12,7 @@ public class Zombie extends Actor
      * Act - do whatever the Zombie wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    GreenfootImage[] idleRight = new GreenfootImage[5];
+    GreenfootImage[] idleRight = new GreenfootImage[9];
 
     SimpleTimer animationTimer = new SimpleTimer();
 
@@ -25,8 +25,8 @@ public class Zombie extends Actor
         // Add your action code here.
         for(int i=0; i < idleRight.length; i++)
         {
-            idleRight[i] = new GreenfootImage ("images/ZombieStand/" + i+ ".png");
-            idleRight[i].scale(40,40);
+            idleRight[i] = new GreenfootImage ("images/ZombieRun/tile00" + i+ ".png");
+            idleRight[i].scale(100,100);
         }
 
         animationTimer.mark();
@@ -37,7 +37,7 @@ public class Zombie extends Actor
 
     public void animateZombie()
     {
-        if(animationTimer.millisElapsed() < 230)
+        if(animationTimer.millisElapsed() < 100)
         {
             return;
         }
@@ -50,7 +50,6 @@ public class Zombie extends Actor
 
     public void act()
     {
-
         MyWorld world = (MyWorld) getWorld();
         Player player1 = world.player1;
         if(player1 != null){
@@ -58,8 +57,9 @@ public class Zombie extends Actor
             int y = world.player1.getY();
             turnTowards(x, y);
         }
-
         move(1);
+        
+        animateZombie();
     }
 
     public void setSpeed(int spd)

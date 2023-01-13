@@ -41,14 +41,14 @@ public class Player extends Actor
 
         for(int i=0; i < idleKill.length; i++)
         {
-            idleRight[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
-            idleRight[i].scale(80,80);
+            idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
+            idleKill[i].scale(80,80);
         }
 
         for(int i=0; i < idleStand.length; i++)
         {
-            idleRight[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
-            idleRight[i].scale(80,80);
+            idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
+            idleStand[i].scale(80,80);
         }
 
         animationTimer.mark();
