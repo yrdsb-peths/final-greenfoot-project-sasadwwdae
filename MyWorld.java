@@ -31,8 +31,8 @@ public class MyWorld extends World
         scoreLabel = new Label(0, 80);
         addObject(scoreLabel,50,50);
 
-        Player player1 = new Player;
-        PlayerTwo player2 = new PlayerTwo;
+        Player player1 = new Player();
+        PlayerTwo player2 = new PlayerTwo();
         if(numPlayers == 1)
         {
             addObject(player1,400,300);
@@ -43,6 +43,9 @@ public class MyWorld extends World
             addObject(player2,100,300);
             addObject(player1,400,300);
         }
+        
+        Zombie zobmie = new Zombie(player1);
+        addObject(zobmie,600,400);
 
     }
 
