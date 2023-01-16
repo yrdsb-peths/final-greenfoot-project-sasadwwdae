@@ -26,7 +26,7 @@ public class Zombie extends Actor
         for(int i=0; i < idleRight.length; i++)
         {
             idleRight[i] = new GreenfootImage ("images/ZombieRun/tile00" + i+ ".png");
-            idleRight[i].scale(100,100);
+            idleRight[i].scale(50,50);
         }
 
         animationTimer.mark();

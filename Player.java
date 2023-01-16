@@ -20,7 +20,6 @@ public class Player extends Actor
     String facing = "right";
     SimpleTimer animationTimer = new SimpleTimer();
 
-    int zombieLife = 5;
     int hurt = 1;
     int heroLife = 3;
 
@@ -59,7 +58,7 @@ public class Player extends Actor
     int imageIndex = 0;
     public void animateHeroRun()
     {
-        if(animationTimer.millisElapsed() < 200)
+        if(animationTimer.millisElapsed() < 230)
         {
             return;
         }
@@ -79,7 +78,7 @@ public class Player extends Actor
             setImage(idleKill[imageIndex]);
             imageIndex = (imageIndex + 1) % idleKill.length;
         }
-        else if(facing.equals("Down"))
+        else if(facing.equals("down"))
         {
             setImage(idleStand[imageIndex]);
             imageIndex = (imageIndex + 1) % idleStand.length;
@@ -97,16 +96,19 @@ public class Player extends Actor
         {
             setLocation(getX(),getY()+3);
         }
+
         else if(Greenfoot.isKeyDown("d"))
         {
             setLocation(getX()+3,getY());
             facing = "right";
         }
+
         else if(Greenfoot.isKeyDown("a"))
         {
             setLocation(getX()-3,getY());
             facing = "left";
         }
+
         else if(Greenfoot.isKeyDown("q"))
         {
             facing = "up";
@@ -118,11 +120,21 @@ public class Player extends Actor
 
         animateHeroRun();
 
-    } 
-
-    private int getZombieLife()
+    }
+    
+    public void hit()
     {
-        return zombieLife;
+        if(facing.equals("up") && isTouching(Zombie.class))
+        {
+            MyWorld world = (MyWorld) getWorld();
+            world.increaseScore();
+        }
+        
+        if(facing.equals("up") && isTouching(Zombie.class))
+        {
+            MyWorld world = (MyWorld) getWorld();
+            world.increaseScore();
+        }
     }
 
     private int getHeroLife()
