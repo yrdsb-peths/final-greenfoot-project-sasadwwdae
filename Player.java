@@ -119,6 +119,8 @@ public class Player extends Actor
         }
 
         animateHeroRun();
+        
+        hit();
 
     }
     
@@ -127,6 +129,9 @@ public class Player extends Actor
         if( isTouching(Zombie.class))
         {
             heroLife --;
+            removeTouching(Zombie.class);
+            MyWorld world = (MyWorld) getWorld();
+            world.createAppleZOmbie();
         }
         return heroLife;
     }

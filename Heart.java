@@ -21,7 +21,7 @@ public class Heart extends Actor
     
     public void PlayerHeat()
     {
-        heart.scale(50,50);
+        heart.scale(60,50);
         setImage(heart);
     }
 }

@@ -14,6 +14,9 @@ public class MyWorld extends World
     int numPlayer;
     int speed = 1;
     Player player1;
+    Heart heart = new Heart();
+    Heart heart2 = new Heart();
+    Heart heart3 = new Heart();
 
     /**
      * Constructor for objects of class MyWorld.
@@ -35,9 +38,6 @@ public class MyWorld extends World
         player1 = new Player();
         addObject(player1,400,300);
         
-        Heart heart = new Heart();
-        Heart heart2 = new Heart();
-        Heart heart3 = new Heart();
         addObject(heart,575,25);
         heart.setLocation(575,25);
         addObject(heart2,550,25);
@@ -49,17 +49,18 @@ public class MyWorld extends World
             PlayerTwo player2 = new PlayerTwo();
             addObject(player2,100,300);
         }
-
-        Zombie zombie = new Zombie();
-        addObject(zombie,200,200);
         
-        if(player1.heroLife==2)
-        {
-            removeObject(heart3);
-        }
+        createAppleZOmbie();
 
     }
-
+    
+    public void createAppleZOmbie()
+    {
+        Zombie zombie = new Zombie();
+        int x = Greenfoot.getRandomNumber(600);
+        int y = Greenfoot.getRandomNumber(400);
+        addObject(zombie,x,y);
+    }
 
     public void increaseScore()
     {
@@ -73,6 +74,24 @@ public class MyWorld extends World
         else
         {
             level = 1;
+        }
+    }
+    
+    public void act()
+    {
+        if(player1.heroLife==2)
+        {
+            removeObject(heart3);
+        }
+        if(player1.heroLife==1)
+        {
+            removeObject(heart3);
+            removeObject(heart2);
+        }
+        if(player1.heroLife==0)
+        {
+            GameOver gameWorld = new GameOver();
+            Greenfoot.setWorld(gameWorld);
         }
     }
 }
