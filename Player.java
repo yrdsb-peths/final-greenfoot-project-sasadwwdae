@@ -122,19 +122,13 @@ public class Player extends Actor
 
     }
     
-    public void hit()
+    public int hit()
     {
-        if(facing.equals("up") && isTouching(Zombie.class))
+        if( isTouching(Zombie.class))
         {
-            MyWorld world = (MyWorld) getWorld();
-            world.increaseScore();
+            heroLife --;
         }
-        
-        if(facing.equals("up") && isTouching(Zombie.class))
-        {
-            MyWorld world = (MyWorld) getWorld();
-            world.increaseScore();
-        }
+        return heroLife;
     }
 
     private int getHeroLife()

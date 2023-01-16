@@ -14,7 +14,7 @@ public class MyWorld extends World
     int numPlayer;
     int speed = 1;
     Player player1;
-    
+
     /**
      * Constructor for objects of class MyWorld.
      * 
@@ -35,18 +35,31 @@ public class MyWorld extends World
         player1 = new Player();
         addObject(player1,400,300);
         
+        Heart heart = new Heart();
+        Heart heart2 = new Heart();
+        Heart heart3 = new Heart();
+        addObject(heart,575,25);
+        heart.setLocation(575,25);
+        addObject(heart2,550,25);
+        addObject(heart3,525,25);
+        heart3.setLocation(525,25);
+
         if(numPlayers == 2)
         {
             PlayerTwo player2 = new PlayerTwo();
             addObject(player2,100,300);
         }
-        
+
         Zombie zombie = new Zombie();
         addObject(zombie,200,200);
+        
+        if(player1.heroLife==2)
+        {
+            removeObject(heart3);
+        }
 
     }
-    
-    
+
 
     public void increaseScore()
     {
