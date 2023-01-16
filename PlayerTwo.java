@@ -14,11 +14,14 @@ public class PlayerTwo extends Actor
      */
     GreenfootImage[] idleRight = new GreenfootImage[5];
     GreenfootImage[] idleLeft = new GreenfootImage[5];
+    GreenfootImage[] idleKill = new GreenfootImage[5];
+    GreenfootImage[] idleStand = new GreenfootImage[5];
 
     String facing = "right";
     SimpleTimer animationTimer = new SimpleTimer();
-    
-    boolean eatApple = false;
+
+    int hurt = 1;
+    int heroLife = 3;
 
     public PlayerTwo()
     {
@@ -28,11 +31,23 @@ public class PlayerTwo extends Actor
             idleRight[i].scale(80,80);
         }
 
-        for(int i=0; i < idleRight.length; i++)
+        for(int i=0; i < idleLeft.length; i++)
         {
             idleLeft[i] = new GreenfootImage ("images/HeroRun/tile00"+i+".png");
             idleLeft[i].mirrorHorizontally();
             idleLeft[i].scale(80,80);
+        }
+
+        for(int i=0; i < idleKill.length; i++)
+        {
+            idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
+            idleKill[i].scale(80,80);
+        }
+
+        for(int i=0; i < idleStand.length; i++)
+        {
+            idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
+            idleStand[i].scale(80,80);
         }
 
         animationTimer.mark();
@@ -53,10 +68,20 @@ public class PlayerTwo extends Actor
             setImage(idleRight[imageIndex]);
             imageIndex = (imageIndex + 1) % idleRight.length;
         }
-        else
+        else if(facing.equals("left"))
         {
             setImage(idleLeft[imageIndex]);
             imageIndex = (imageIndex + 1) % idleLeft.length;
+        }
+        else if(facing.equals("up"))
+        {
+            setImage(idleKill[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleKill.length;
+        }
+        else if(facing.equals("down"))
+        {
+            setImage(idleStand[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleStand.length;
         }
     }
 
@@ -67,42 +92,59 @@ public class PlayerTwo extends Actor
         {
             setLocation(getX(),getY()-3);
         }
-
-        if(Greenfoot.isKeyDown("down"))
+        else if(Greenfoot.isKeyDown("down"))
         {
             setLocation(getX(),getY()+3);
         }
 
-        if(Greenfoot.isKeyDown("right"))
+        else if(Greenfoot.isKeyDown("right"))
         {
             setLocation(getX()+3,getY());
             facing = "right";
         }
 
-        if(Greenfoot.isKeyDown("left"))
+        else if(Greenfoot.isKeyDown("left"))
         {
             setLocation(getX()-3,getY());
             facing = "left";
         }
-        
-        if(isTouching(Zombie.class))
+
+        else if(Greenfoot.isKeyDown("/"))
         {
-            
+            facing = "up";
         }
-        
+        else
+        {
+            facing = "down";
+        }
 
         animateHeroRun();
+        
+        hit();
 
     }
-
-    int size = 80;
-    public void setSize(int sz)
+    
+    public int hit()
     {
-        size = size + sz;
+        if( isTouching(Zombie.class))
+        {
+            heroLife --;
+            removeTouching(Zombie.class);
+            MyWorld world = (MyWorld) getWorld();
+            world.createZombie();
+        }
+        if( isTouching(ZombieTwo.class))
+        {
+            heroLife --;
+            removeTouching(ZombieTwo.class);
+            MyWorld world = (MyWorld) getWorld();
+            world.createZombieTwo();
+        }
+        return heroLife;
     }
 
-    public boolean getEatApple()
+    private int getHeroLife()
     {
-        return eatApple;
+        return heroLife;
     }
 }

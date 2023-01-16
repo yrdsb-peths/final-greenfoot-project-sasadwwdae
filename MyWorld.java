@@ -14,6 +14,7 @@ public class MyWorld extends World
     int numPlayer;
     int speed = 1;
     Player player1;
+    PlayerTwo player2;
     Heart heart = new Heart();
     Heart heart2 = new Heart();
     Heart heart3 = new Heart();
@@ -48,15 +49,25 @@ public class MyWorld extends World
         {
             PlayerTwo player2 = new PlayerTwo();
             addObject(player2,100,300);
+            
+            createZombieTwo();
         }
         
-        createAppleZOmbie();
+        createZombie();
 
     }
     
-    public void createAppleZOmbie()
+    public void createZombie()
     {
         Zombie zombie = new Zombie();
+        int x = Greenfoot.getRandomNumber(600);
+        int y = Greenfoot.getRandomNumber(400);
+        addObject(zombie,x,y);
+    }
+    
+    public void createZombieTwo()
+    {
+        ZombieTwo zombie = new ZombieTwo();
         int x = Greenfoot.getRandomNumber(600);
         int y = Greenfoot.getRandomNumber(400);
         addObject(zombie,x,y);

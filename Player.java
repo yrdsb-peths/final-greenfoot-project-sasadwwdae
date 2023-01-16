@@ -131,7 +131,14 @@ public class Player extends Actor
             heroLife --;
             removeTouching(Zombie.class);
             MyWorld world = (MyWorld) getWorld();
-            world.createAppleZOmbie();
+            world.createZombie();
+        }
+        if( isTouching(ZombieTwo.class))
+        {
+            heroLife --;
+            removeTouching(ZombieTwo.class);
+            MyWorld world = (MyWorld) getWorld();
+            world.createZombieTwo();
         }
         return heroLife;
     }
