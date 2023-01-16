@@ -47,7 +47,7 @@ public class MyWorld extends World
 
         if(numPlayers == 2)
         {
-            PlayerTwo player2 = new PlayerTwo();
+            player2 = new PlayerTwo();
             addObject(player2,100,300);
             
             createZombieTwo();

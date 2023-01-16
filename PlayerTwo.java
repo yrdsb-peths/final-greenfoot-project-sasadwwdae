@@ -126,18 +126,18 @@ public class PlayerTwo extends Actor
     
     public int hit()
     {
+        MyWorld world = (MyWorld) getWorld();
+        Player player1 = world.player1;
         if( isTouching(Zombie.class))
         {
-            heroLife --;
+            player1.heroLife --;
             removeTouching(Zombie.class);
-            MyWorld world = (MyWorld) getWorld();
             world.createZombie();
         }
         if( isTouching(ZombieTwo.class))
         {
-            heroLife --;
+            player1.heroLife --;
             removeTouching(ZombieTwo.class);
-            MyWorld world = (MyWorld) getWorld();
             world.createZombieTwo();
         }
         return heroLife;
