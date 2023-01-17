@@ -19,8 +19,20 @@ public class Ax extends Actor
         // Add your action code here.
         Axplay();
         hit();
+
+
+        MyWorld world = (MyWorld) getWorld();
+        Player player1 = world.player1;
+        if(player1.facing.equals("right")
+        {
+            setLocation(getX()+1,getY());
+        }
+        if(player1.facing.equals("left")
+        {
+            setLocation(getX()-1,getY());
+        }
         
-        move(1);
+        setLocation(getX(),getY()-3);
     }
     
     public void Axplay()
