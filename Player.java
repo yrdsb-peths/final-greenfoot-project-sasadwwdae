@@ -20,7 +20,7 @@ public class Player extends Actor
     GreenfootImage[] idleStandLeft = new GreenfootImage[5];
 
     String facing = "right";
-    String standing = "up";
+    String action = "standing";
     SimpleTimer animationTimer = new SimpleTimer();
 
     int hurt = 1;
@@ -46,7 +46,7 @@ public class Player extends Actor
             idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
             idleKill[i].scale(80,80);
         }
-        
+
         for(int i=0; i < idleKillLeft.length; i++)
         {
             idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
@@ -59,14 +59,14 @@ public class Player extends Actor
             idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
             idleStand[i].scale(80,80);
         }
-        
+
         for(int i=0; i < idleStandLeft.length; i++)
         {
             idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
 
             idleStand[i].scale(80,80);
         }
-        
+
         animationTimer.mark();
 
         setImage(idleRight[0]);
@@ -75,40 +75,46 @@ public class Player extends Actor
     int imageIndex = 0;
     public void animateHeroRun()
     {
-        if(animationTimer.millisElapsed() < 230)
+        if(animationTimer.millisElapsed() < 200)
         {
             return;
         }
         animationTimer.mark();
         if(facing.equals("right"))
         {
-            setImage(idleRight[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleRight.length;
+            if(action.equals("run"))
+            {
+                setImage(idleRight[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleRight.length;
+            }
+            else if(action.equals("attack"))
+            {
+                setImage(idleKill[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleKill.length;
+            }
+            else if(action.equals("stand"))
+            {
+                    setImage(idleStand[imageIndex]);
+                    imageIndex = (imageIndex + 1) % idleStand.length;
+            }
         }
         else if(facing.equals("left"))
         {
-            setImage(idleLeft[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleLeft.length;
-        }
-        else if(standing.equals("up"))
-        {
-            setImage(idleKill[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleKill.length;
-        }
-        else if(standing.equals("up") && facing.equals("left"))
-        {
-            setImage(idleKillLeft[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleKillLeft.length;
-        }
-        else if(standing.equals("down"))
-        {
-            setImage(idleStand[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleStand.length;
-        }
-        else if(standing.equals("down")&& facing.equals("left"))
-        {
-            setImage(idleStandLeft[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleStandLeft.length;
+            if(action.equals("run"))
+            {
+                setImage(idleLeft[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleLeft.length;
+            }
+            else if(action.equals("attack"))
+            {
+                setImage(idleKillLeft[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleKillLeft.length;
+            }
+            else if(action.equals("stand"))
+            {
+                    setImage(idleStandLeft[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleStandLeft.length;
+            }
         }
     }
 
@@ -128,31 +134,33 @@ public class Player extends Actor
         {
             setLocation(getX()+3,getY());
             facing = "right";
+            action = "run";
         }
 
         else if(Greenfoot.isKeyDown("a"))
         {
             setLocation(getX()-3,getY());
             facing = "left";
+            action = "run";
         }
 
         else if(Greenfoot.isKeyDown("q"))
         {
-            standing = "up";
+            action = "attack";
             MyWorld world = (MyWorld) getWorld();
             world.createAx();
         }
         else
         {
-            standing = "down";
+            action = "stand";
         }
 
         animateHeroRun();
-        
+
         hit();
 
     }
-    
+
     public int hit()
     {
         if( isTouching(Zombie.class))

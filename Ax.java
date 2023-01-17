@@ -23,11 +23,11 @@ public class Ax extends Actor
 
         MyWorld world = (MyWorld) getWorld();
         Player player1 = world.player1;
-        if(player1.facing.equals("right")
+        if(player1.facing.equals("right"))
         {
             setLocation(getX()+1,getY());
         }
-        if(player1.facing.equals("left")
+        if(player1.facing.equals("left"))
         {
             setLocation(getX()-1,getY());
         }
