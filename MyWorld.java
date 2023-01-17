@@ -72,6 +72,14 @@ public class MyWorld extends World
         int y = Greenfoot.getRandomNumber(400);
         addObject(zombie,x,y);
     }
+    
+    public void createAx()
+    {
+        Ax ax = new Ax();
+        int x = player1.getX();
+        int y = player1.getY();
+        addObject(ax,x,y);
+    }
 
     public void increaseScore()
     {

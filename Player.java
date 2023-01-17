@@ -15,9 +15,12 @@ public class Player extends Actor
     GreenfootImage[] idleRight = new GreenfootImage[5];
     GreenfootImage[] idleLeft = new GreenfootImage[5];
     GreenfootImage[] idleKill = new GreenfootImage[5];
+    GreenfootImage[] idleKillLeft = new GreenfootImage[5];
     GreenfootImage[] idleStand = new GreenfootImage[5];
+    GreenfootImage[] idleStandLeft = new GreenfootImage[5];
 
     String facing = "right";
+    String standing = "up";
     SimpleTimer animationTimer = new SimpleTimer();
 
     int hurt = 1;
@@ -43,13 +46,27 @@ public class Player extends Actor
             idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
             idleKill[i].scale(80,80);
         }
+        
+        for(int i=0; i < idleKillLeft.length; i++)
+        {
+            idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
+            idleLeft[i].mirrorHorizontally();
+            idleKill[i].scale(80,80);
+        }
 
         for(int i=0; i < idleStand.length; i++)
         {
             idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
             idleStand[i].scale(80,80);
         }
+        
+        for(int i=0; i < idleStandLeft.length; i++)
+        {
+            idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
 
+            idleStand[i].scale(80,80);
+        }
+        
         animationTimer.mark();
 
         setImage(idleRight[0]);
@@ -73,15 +90,25 @@ public class Player extends Actor
             setImage(idleLeft[imageIndex]);
             imageIndex = (imageIndex + 1) % idleLeft.length;
         }
-        else if(facing.equals("up"))
+        else if(standing.equals("up"))
         {
             setImage(idleKill[imageIndex]);
             imageIndex = (imageIndex + 1) % idleKill.length;
         }
-        else if(facing.equals("down"))
+        else if(standing.equals("up") && facing.equals("left"))
+        {
+            setImage(idleKillLeft[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleKillLeft.length;
+        }
+        else if(standing.equals("down"))
         {
             setImage(idleStand[imageIndex]);
             imageIndex = (imageIndex + 1) % idleStand.length;
+        }
+        else if(standing.equals("down")&& facing.equals("left"))
+        {
+            setImage(idleStandLeft[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleStandLeft.length;
         }
     }
 
@@ -111,11 +138,13 @@ public class Player extends Actor
 
         else if(Greenfoot.isKeyDown("q"))
         {
-            facing = "up";
+            standing = "up";
+            MyWorld world = (MyWorld) getWorld();
+            world.createAx();
         }
         else
         {
-            facing = "down";
+            standing = "down";
         }
 
         animateHeroRun();
