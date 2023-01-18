@@ -13,6 +13,7 @@ public class Player extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     GreenfootSound swingSound = new GreenfootSound("swing.mp3");
+    
     GreenfootImage[] idleRight = new GreenfootImage[5];
     GreenfootImage[] idleLeft = new GreenfootImage[5];
     GreenfootImage[] idleKill = new GreenfootImage[5];
@@ -165,6 +166,8 @@ public class Player extends Actor
         animateHero();
 
         hit();
+        
+        GreenfootSound bgm = new GreenfootSound("BGM.mp3");
 
     }
 

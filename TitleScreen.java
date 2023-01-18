@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
     public class TitleScreen extends World
 {
 
+    GreenfootSound bgm = new GreenfootSound("BGM.mp3");
     Label titleLabel = new Label("The end of life",60);
     /**
      * Constructor for objects of class TitleScreen.
@@ -30,14 +31,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         {
             MyWorld gameWorld = new MyWorld(1);
             Greenfoot.setWorld(gameWorld);
+            bgm.play();
         }else if(Greenfoot.isKeyDown("2"))
         {
             MyWorld gameWorld = new MyWorld(2);
             Greenfoot.setWorld(gameWorld);
+            bgm.play();
         }else if(Greenfoot.isKeyDown("i"))
         {
             Introduction gameWorld = new Introduction();
             Greenfoot.setWorld(gameWorld);
+            bgm.play();
         }
     }
     
