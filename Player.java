@@ -47,23 +47,9 @@ public class Player extends Actor
             idleKill[i].scale(80,80);
         }
 
-        for(int i=0; i < idleKillLeft.length; i++)
-        {
-            idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
-            idleLeft[i].mirrorHorizontally();
-            idleKill[i].scale(80,80);
-        }
-
         for(int i=0; i < idleStand.length; i++)
         {
             idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
-            idleStand[i].scale(80,80);
-        }
-
-        for(int i=0; i < idleStandLeft.length; i++)
-        {
-            idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
-
             idleStand[i].scale(80,80);
         }
 
@@ -73,7 +59,7 @@ public class Player extends Actor
     }
 
     int imageIndex = 0;
-    public void animateHeroRun()
+    public void animateHero()
     {
         if(animationTimer.millisElapsed() < 200)
         {
@@ -82,39 +68,23 @@ public class Player extends Actor
         animationTimer.mark();
         if(facing.equals("right"))
         {
-            if(action.equals("run"))
-            {
-                setImage(idleRight[imageIndex]);
-                imageIndex = (imageIndex + 1) % idleRight.length;
-            }
-            else if(action.equals("attack"))
-            {
-                setImage(idleKill[imageIndex]);
-                imageIndex = (imageIndex + 1) % idleKill.length;
-            }
-            else if(action.equals("stand"))
-            {
-                setImage(idleStand[imageIndex]);
-                imageIndex = (imageIndex + 1) % idleStand.length;
-            }
+            setImage(idleRight[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleRight.length;
         }
         else if(facing.equals("left"))
         {
-            if(action.equals("run"))
-            {
-                setImage(idleLeft[imageIndex]);
-                imageIndex = (imageIndex + 1) % idleLeft.length;
-            }
-            else if(action.equals("attack"))
-            {
-                setImage(idleKillLeft[imageIndex]);
-                imageIndex = (imageIndex + 1) % idleKillLeft.length;
-            }
-            else if(action.equals("stand"))
-            {
-                    setImage(idleStandLeft[imageIndex]);
-                imageIndex = (imageIndex + 1) % idleStandLeft.length;
-            }
+            setImage(idleLeft[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleLeft.length;
+        }
+        else if(action.equals("attack"))
+        {
+            setImage(idleKill[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleKill.length;
+        }
+        else if(action.equals("stand"))
+        {
+            setImage(idleStand[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleStand.length;
         }
     }
 
@@ -153,9 +123,10 @@ public class Player extends Actor
         else
         {
             action = "stand";
+            facing = "non";
         }
 
-        animateHeroRun();
+        animateHero();
 
         hit();
 
@@ -163,7 +134,7 @@ public class Player extends Actor
 
     public int hit()
     {
-        if( isTouching(Zombie.class))
+        if(isTouching(Zombie.class))
         {
             heroLife --;
             removeTouching(Zombie.class);
