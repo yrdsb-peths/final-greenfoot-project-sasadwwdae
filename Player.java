@@ -94,8 +94,8 @@ public class Player extends Actor
             }
             else if(action.equals("stand"))
             {
-                    setImage(idleStand[imageIndex]);
-                    imageIndex = (imageIndex + 1) % idleStand.length;
+                setImage(idleStand[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleStand.length;
             }
         }
         else if(facing.equals("left"))
