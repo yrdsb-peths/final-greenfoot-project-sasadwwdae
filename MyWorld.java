@@ -73,11 +73,12 @@ public class MyWorld extends World
         addObject(zombie,x,y);
     }
     
-    public void createAx()
+    public void createAx(int angle)
     {
         Ax ax = new Ax();
         int x = player1.getX();
         int y = player1.getY();
+        ax.setRotation(angle);
         addObject(ax,x,y);
     }
 

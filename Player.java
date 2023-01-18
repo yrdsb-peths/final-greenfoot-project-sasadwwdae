@@ -118,7 +118,14 @@ public class Player extends Actor
         {
             action = "attack";
             MyWorld world = (MyWorld) getWorld();
-            world.createAx();
+            Ax ax = new Ax();
+            if(facing == "right"){
+                ax.speed = 2;
+            } else {
+                ax.speed = -2;
+            }
+            getWorld().addObject(ax, getX(), getY());
+            
         }
         else
         {
