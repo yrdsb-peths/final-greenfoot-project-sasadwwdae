@@ -18,6 +18,10 @@ public class Player extends Actor
     GreenfootImage[] idleDown = new GreenfootImage[5];
 
     String facing = "right";
+<<<<<<< Updated upstream
+=======
+    String action = "stand";
+>>>>>>> Stashed changes
     SimpleTimer animationTimer = new SimpleTimer();
 
     boolean eatApple = false;
@@ -36,8 +40,26 @@ public class Player extends Actor
             idleLeft[i].mirrorHorizontally();
             idleLeft[i].scale(80,80);
         }
+<<<<<<< Updated upstream
         /*
         for(int i=0; i < idleup.length; i++)
+=======
+
+        for(int i=0; i < idleKill.length; i++)
+        {
+            idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
+            idleKill[i].scale(80,80);
+        }
+
+        for(int i=0; i < idleKillLeft.length; i++)
+        {
+            idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
+            idleKill[i].mirrorHorizontally();
+            idleKill[i].scale(80,80);
+        }
+
+        for(int i=0; i < idleStand.length; i++)
+>>>>>>> Stashed changes
         {
         idleRight[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
         idleRight[i].scale(80,80);
@@ -45,8 +67,14 @@ public class Player extends Actor
          */
         for(int i=0; i < idleDown.length; i++)
         {
+<<<<<<< Updated upstream
             idleDown[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
             idleDown[i].scale(80,80);
+=======
+            idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
+            idleStand[i].mirrorHorizontally();
+            idleStand[i].scale(80,80);
+>>>>>>> Stashed changes
         }
 
         animationTimer.mark();
@@ -64,6 +92,7 @@ public class Player extends Actor
         animationTimer.mark();
         if(facing.equals("right"))
         {
+<<<<<<< Updated upstream
             setImage(idleRight[imageIndex]);
             imageIndex = (imageIndex + 1) % idleRight.length;
         }
@@ -81,15 +110,60 @@ public class Player extends Actor
         {
             setImage(idleDown[imageIndex]);
             imageIndex = (imageIndex + 1) % idleDown.length;
+=======
+            if(action.equals("run"))
+            {
+                setImage(idleRight[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleRight.length;
+            }
+            else if(action.equals("attack"))
+            {
+                setImage(idleKill[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleKill.length;
+            }
+            else if(action.equals("stand"))
+            {
+                setImage(idleStand[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleStand.length;
+            }
+        }
+        else if(facing.equals("left"))
+        {
+            if(action.equals("run"))
+            {
+                setImage(idleLeft[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleLeft.length;
+            }
+            else if(action.equals("attack"))
+            {
+                setImage(idleKillLeft[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleKillLeft.length;
+            }
+            else if(action.equals("stand"))
+            {
+                setImage(idleStandLeft[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleStandLeft.length;
+            }
+>>>>>>> Stashed changes
         }
     }
 
     public void act()
     {
         // Add your action code here.
+        MyWorld world = (MyWorld) getWorld();
+
         if(Greenfoot.isKeyDown("w"))
         {
             setLocation(getX(),getY()-3);
+        }
+        else if(Greenfoot.isKeyDown("s"))
+        {
+            setLocation(getX(),getY()+3);
+        }
+        else if(Greenfoot.isKeyDown("w"))
+        {
+            setLocation(getX(),getY()+3);
         }
         else if(Greenfoot.isKeyDown("s"))
         {
@@ -110,7 +184,13 @@ public class Player extends Actor
 
         else if(Greenfoot.isKeyDown("q"))
         {
+<<<<<<< Updated upstream
             facing = "up";
+=======
+            action = "attack";
+            MyWorld mainWorld = (MyWorld) getWorld();
+            mainWorld.createAx();
+>>>>>>> Stashed changes
         }
         else
         {
@@ -121,8 +201,12 @@ public class Player extends Actor
         animateHeroRun();
 
     }
+<<<<<<< Updated upstream
 
     public void hit()
+=======
+    public int hit()
+>>>>>>> Stashed changes
     {
         if(isTouching(Zombie.class))
         {
