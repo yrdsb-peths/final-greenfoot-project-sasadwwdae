@@ -17,8 +17,9 @@ public class Ax extends Actor
 
     public void act()
     {
-        
         move(speed);
+        Axplay();
+        hit();
     }
 
     public void Axplay()

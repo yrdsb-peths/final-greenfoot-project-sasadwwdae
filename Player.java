@@ -28,6 +28,7 @@ public class Player extends Actor
 
     public Player()
     {
+        
         for(int i=0; i < idleRight.length; i++)
         {
             idleRight[i] = new GreenfootImage ("images/HeroRun/tile00"+i+".png");
@@ -68,20 +69,36 @@ public class Player extends Actor
         animationTimer.mark();
         if(facing.equals("right"))
         {
-            setImage(idleRight[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleRight.length;
+            if(action.equals("run"))
+            {
+                setImage(idleRight[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleRight.length;
+            }
+            else if(action.equals("attack"))
+            {
+                setImage(idleKill[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleKill.length;
+            }
+            else if(action.equals("stand"))
+            {
+                setImage(idleStand[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleStand.length;
+            }
         }
         else if(facing.equals("left"))
         {
-            setImage(idleLeft[imageIndex]);
-            imageIndex = (imageIndex + 1) % idleLeft.length;
+            if(action.equals("run"))
+            {
+                setImage(idleLeft[imageIndex]);
+                imageIndex = (imageIndex + 1) % idleLeft.length;
+            }
         }
-        else if(action.equals("attack"))
+        if(action.equals("attack"))
         {
             setImage(idleKill[imageIndex]);
             imageIndex = (imageIndex + 1) % idleKill.length;
         }
-        else if(action.equals("stand"))
+        if(action.equals("stand"))
         {
             setImage(idleStand[imageIndex]);
             imageIndex = (imageIndex + 1) % idleStand.length;
@@ -117,15 +134,16 @@ public class Player extends Actor
         else if(Greenfoot.isKeyDown("q"))
         {
             action = "attack";
-            MyWorld world = (MyWorld) getWorld();
             Ax ax = new Ax();
-            if(facing == "right"){
+            if(facing == "right")
+            {
                 ax.speed = 2;
-            } else {
+            } 
+            else if(facing == "left")
+            {
                 ax.speed = -2;
             }
             getWorld().addObject(ax, getX(), getY());
-            
         }
         else
         {
