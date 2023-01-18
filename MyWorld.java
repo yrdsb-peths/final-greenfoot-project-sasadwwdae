@@ -30,7 +30,7 @@ public class MyWorld extends World
     public MyWorld(int numPlayers)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1, false); 
+        super(600, 400, 1, true); 
         getBackground().scale(600,500);
 
         scoreLabel = new Label(0, 80);
