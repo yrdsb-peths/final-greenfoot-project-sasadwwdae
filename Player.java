@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Player here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Zhu) 
+ * @version (2023 Jan 19)
  */
 public class Player extends Actor
 {
@@ -12,105 +12,108 @@ public class Player extends Actor
      * Act - do whatever the Elephant wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    //set the attack sound
     GreenfootSound swingSound = new GreenfootSound("swing.mp3");
     
+    //set the different idle
     GreenfootImage[] idleRight = new GreenfootImage[5];
     GreenfootImage[] idleLeft = new GreenfootImage[5];
     GreenfootImage[] idleKill = new GreenfootImage[5];
     GreenfootImage[] idleKillLeft = new GreenfootImage[5];
     GreenfootImage[] idleStand = new GreenfootImage[5];
     GreenfootImage[] idleStandLeft = new GreenfootImage[5];
+    
+    String facing = "right";//facing direction
+    String action = "standing";//set the action attack,stand,run
+    SimpleTimer animationTimer = new SimpleTimer();//animation timer
 
-    String facing = "right";
-    String action = "standing";
-    SimpleTimer animationTimer = new SimpleTimer();
-
-    int hurt = 1;
-    int heroLife = 3;
+    int hurt = 1;//the hert number
+    int heroLife = 3;//the hero life
 
     public Player()
     {
-
+        //right run
         for(int i=0; i < idleRight.length; i++)
         {
             idleRight[i] = new GreenfootImage ("images/HeroRun/tile00"+i+".png");
             idleRight[i].scale(80,80);
         }
-
+        //left run
         for(int i=0; i < idleLeft.length; i++)
         {
             idleLeft[i] = new GreenfootImage ("images/HeroRun/tile00"+i+".png");
             idleLeft[i].mirrorHorizontally();
             idleLeft[i].scale(80,80);
         }
-
+        //attack right
         for(int i=0; i < idleKill.length; i++)
         {
             idleKill[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
             idleKill[i].scale(80,80);
         }
-
+        //attack left
         for(int i=0; i < idleKill.length; i++)
         {
             idleKillLeft[i] = new GreenfootImage ("images/Swing/tile00"+i+".png");
             idleKillLeft[i].mirrorHorizontally();
             idleKillLeft[i].scale(80,80);
         }
-
+        //stand right
         for(int i=0; i < idleStand.length; i++)
         {
             idleStand[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
             idleStand[i].scale(80,80);
         }
-
+        //stand left
         for(int i=0; i < idleStandLeft.length; i++)
         {
             idleStandLeft[i] = new GreenfootImage ("images/HeroStand/tile"+i+".png");
             idleStandLeft[i].mirrorHorizontally();
             idleStandLeft[i].scale(80,80);
         }
-
+        //animation timer
         animationTimer.mark();
-
+        //set the image
         setImage(idleRight[0]);
     }
 
     int imageIndex = 0;
     public void animateHero()
     {
+        //return the animation timer
         if(animationTimer.millisElapsed() < 200)
         {
             return;
         }
         animationTimer.mark();
-
-        if(facing.equals("right") && action.equals("run"))
+        //set the image
+        if(facing.equals("right") && action.equals("run"))//right run
         {
             setImage(idleRight[imageIndex]);
             imageIndex = (imageIndex + 1) % idleRight.length;
         }
-        else if(facing.equals("right")&&action.equals("attack"))
+        else if(facing.equals("right")&&action.equals("attack"))//right attack 
         {
             setImage(idleKill[imageIndex]);
             imageIndex = (imageIndex + 1) % idleKill.length;
         }
-        else if(facing.equals("right")&&action.equals("stand"))
+        else if(facing.equals("right")&&action.equals("stand"))//right stand
         {
             setImage(idleStand[imageIndex]);
             imageIndex = (imageIndex + 1) % idleStand.length;
         }
-
-        else if(facing.equals("left")&&action.equals("run"))
+        
+        else if(facing.equals("left")&&action.equals("run"))//left run
         {
             setImage(idleLeft[imageIndex]);
             imageIndex = (imageIndex + 1) % idleLeft.length;
         }
-        else if(facing.equals("left")&&action.equals("attack"))
+        else if(facing.equals("left")&&action.equals("attack"))//left attack
         {
             setImage(idleKillLeft[imageIndex]);
             imageIndex = (imageIndex + 1) % idleKillLeft.length;
         }
-        else if(facing.equals("left")&&action.equals("stand"))
+        else if(facing.equals("left")&&action.equals("stand"))//left stand
         {
             setImage(idleStandLeft[imageIndex]);
             imageIndex = (imageIndex + 1) % idleStandLeft.length;
@@ -120,23 +123,23 @@ public class Player extends Actor
     public void act()
     {
         // Add your action code here.
-        if(Greenfoot.isKeyDown("w"))
+        if(Greenfoot.isKeyDown("w"))//move up
         {
             setLocation(getX(),getY()-3);
         }
-        else if(Greenfoot.isKeyDown("s"))
+        else if(Greenfoot.isKeyDown("s"))//move down
         {
             setLocation(getX(),getY()+3);
         }
 
-        else if(Greenfoot.isKeyDown("d"))
+        else if(Greenfoot.isKeyDown("d"))//move right, set the facing and action
         {
             setLocation(getX()+3,getY());
             facing = "right";
             action = "run";
         }
 
-        else if(Greenfoot.isKeyDown("a"))
+        else if(Greenfoot.isKeyDown("a"))//move left, set the facing and action
         {
             setLocation(getX()-3,getY());
             facing = "left";
@@ -147,7 +150,8 @@ public class Player extends Actor
         {
             action = "attack";
             Ax ax = new Ax();
-            if(facing == "right")
+            //depend facing derection than depend on the ax attack direction
+            if(facing == "right") 
             {
                 ax.speed = 2;
             } 
@@ -155,22 +159,21 @@ public class Player extends Actor
             {
                 ax.speed = -2;
             }
+            //add the ax class
             getWorld().addObject(ax, getX(), getY());
+            //play the attack sound
             swingSound.play();
         }
-        else
+        else//set stand idle
         {
             action = "stand";
         }
-
+        // the animation of the player run
         animateHero();
-
+        //hit by zombie and lose life 
         hit();
-        
-        GreenfootSound bgm = new GreenfootSound("BGM.mp3");
-
     }
-
+    //if touching the zombie then the player will get heart
     public int hit()
     {
         if(isTouching(Zombie.class))
@@ -187,11 +190,6 @@ public class Player extends Actor
             MyWorld world = (MyWorld) getWorld();
             world.createZombieTwo();
         }
-        return heroLife;
-    }
-
-    private int getHeroLife()
-    {
         return heroLife;
     }
 }

@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Introduction here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Zhu) 
+ * @version (2023 Jan 19)
  */
 public class Introduction extends World
 {
@@ -13,6 +13,7 @@ public class Introduction extends World
      * Constructor for objects of class Introduction.
      * 
      */
+    //create a new world
     public Introduction()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -25,6 +26,7 @@ public class Introduction extends World
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
      */
+    // add the basic explaination about the game
     private void prepare()
     {
         Label label = new Label("in this game you need to kill zombies", 40);
@@ -39,7 +41,7 @@ public class Introduction extends World
         Label label4 = new Label("use wasd and arrows to move", 40);
         addObject(label4,284,278);
         label4.setLocation(321,279);
-        Label label5 = new Label("q and / to attack", 40);
+        Label label5 = new Label("f and / to attack", 40);
         addObject(label5,288,313);
         label5.setLocation(310,323);
         label.setLocation(322,49);
@@ -53,7 +55,7 @@ public class Introduction extends World
         addObject(label6,287,310);
         label6.setLocation(308,309);
     }
-
+    //create a new world depend on which buttom you press
     public void act()
     {
         if(Greenfoot.isKeyDown("1"))

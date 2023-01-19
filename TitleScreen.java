@@ -3,13 +3,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class TitleScreen here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Zhu) 
+ * @version (2023 Jan 19)
  */
     public class TitleScreen extends World
 {
-
+    //reference the BGM
     GreenfootSound bgm = new GreenfootSound("BGM.mp3");
+    //add the title screen
     Label titleLabel = new Label("The end of life",60);
     /**
      * Constructor for objects of class TitleScreen.
@@ -20,11 +21,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 400, 1); 
         getBackground().scale(600,500);
-
+        //add the title screen
         addObject(titleLabel,300,100);
         prepare();
     }
-
+    //press different buttom to enter different world to get the information or play the game
     public void act()
     {
         if(Greenfoot.isKeyDown("1"))
@@ -44,7 +45,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
             bgm.play();
         }
     }
-    
+    //add the explaination
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.

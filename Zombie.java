@@ -3,8 +3,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class Zombie here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (Zhu) 
+ * @version (2023 Jan 19)
  */
 public class Zombie extends Actor
 {
@@ -12,14 +12,16 @@ public class Zombie extends Actor
      * Act - do whatever the Zombie wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    //set the zombie move animation 
     GreenfootImage[] idleRight = new GreenfootImage[9];
-
+    //the animation timer 
     SimpleTimer animationTimer = new SimpleTimer();
-
+    //set the series of variable
     int speed = 1;
     int life = 5;
     int hurt = 1;
 
+    //paly the animation 
     public Zombie()
     {
         // Add your action code here.
@@ -34,7 +36,7 @@ public class Zombie extends Actor
         setImage(idleRight[0]);
     }
     int imageIndex = 0;
-
+    //set the animation 
     public void animateZombie()
     {
         if(animationTimer.millisElapsed() < 100)
@@ -47,7 +49,7 @@ public class Zombie extends Actor
         imageIndex = (imageIndex + 1) % idleRight.length;
 
     }
-
+    //towards the player1
     public void act()
     {
         MyWorld world = (MyWorld) getWorld();
@@ -61,14 +63,9 @@ public class Zombie extends Actor
         
         animateZombie();
     }
-
+    //set the speed
     public void setSpeed(int spd)
     {
         speed = spd;
-    }
-
-    private int getLife()
-    {
-        return life;
     }
 }
